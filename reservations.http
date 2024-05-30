@@ -1,0 +1,16 @@
+
+
+
+### get reservations
+
+GET http://localhost:3000/reservations
+
+### Create Reservations 
+
+POST http://localhost:3000/reservations
+  Content-Type: application/json
+
+    {
+        "username": "maria",
+        "password": "guess"
+    }
