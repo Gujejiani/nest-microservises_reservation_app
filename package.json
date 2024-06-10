@@ -9,6 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
+    "build:image": "sudo docker build ../../ -f Dockerfile reservations_image",
     "compose": "sudo docker-compose up",
     "mongo:local": "mongod --dbpath=db",
     "start:dev": "nest start --watch",

@@ -22,6 +22,7 @@ WORKDIR /usr/src/app
 COPY package.json ./
 COPY package-lock.json ./
 
+# only install production dependencies
 RUN npm install --only=prod
 
 COPY --from=development /usr/src/app/dist ./dist
