@@ -4,7 +4,6 @@ import { PassportStrategy } from "@nestjs/passport";
 import { UsersService } from "../users/users.service";
 import { ExtractJwt, Strategy } from "passport-jwt";
 
-import { Request } from 'express';
 import { TokenPayload } from "../interfaces/tocken-payload.interface";
 
 @Injectable()
@@ -14,9 +13,9 @@ export class JwtStrategy extends PassportStrategy(Strategy){
         super({
             
             jwtFromRequest: ExtractJwt.fromExtractors([
-                (request: Request) => {
-                    console.log('here we aree', request.cookies.Authentication)
-                    return request?.cookies?.Authentication;
+                (request: any) => {
+                    console.log('here we Authentication Cookie', request?.cookies?.Authentication, request?.Authentication)
+                    return request?.cookies?.Authentication || request?.Authentication ; // it might come from rpc request
                 }
             
             ]),
