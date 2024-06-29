@@ -23,11 +23,11 @@ export class PaymentsService {
     card,
     amount
  }: CreateChargeDto){
-  const cardd = await this.stripe.customers.createSource(
-    this.configService.get('TEST_CUSTOMER_ID'), // customer id
+  // const cardd = await this.stripe.customers.createSource(
+  //   this.configService.get('TEST_CUSTOMER_ID'), // customer id
 
-    {source: 'tok_mastercard'}
-  );
+  //   {source: 'tok_mastercard'}
+  // );
 
     // const paymentMethod = await this.stripe.paymentMethods.create({
     //   type: 'card',
@@ -37,14 +37,16 @@ export class PaymentsService {
     // });
    
     // pm_card_visa
-    console.log('paymentMethod ', cardd, card)
+     console.log('paymentMethod card data', card)
     const paymentIntent = await this.stripe.paymentIntents.create({
-      payment_method: cardd?.id ,
+     // payment_method: cardd?.id ,
       amount: amount * 100, 
       confirm: true,
-      payment_method_types: ['card'],
+    //  payment_method_types: ['card'],
       currency: 'usd',
-      customer:  this.configService.get('TEST_CUSTOMER_ID'),
+      payment_method: 'pm_card_visa',
+      return_url: 'https://example.com/return',
+     // customer:  this.configService.get('TEST_CUSTOMER_ID'),
     })
 
     return paymentIntent
