@@ -18,6 +18,7 @@ export class ReservationsService {
       console.log('CHECK UPPPPPPP = >....... . ... . .  > >> > > > > >> > > >> > > ')
       return   this.reservationsRepository.create({
         ...createReservationDto,
+        invoiceId: res.id,
         timeStamp: new Date(),
         userId: userId
       });
