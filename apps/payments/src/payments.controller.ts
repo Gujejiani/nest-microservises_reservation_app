@@ -1,7 +1,7 @@
 import { Controller, Get, UsePipes, ValidationPipe } from '@nestjs/common';
 import { PaymentsService } from './payments.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { CreateChargeDto } from '@app/common';
+import { PaymentsCreateChargeDto } from '@app/common/dto/payments-create-charge.dto';
 
 
 @Controller()
@@ -19,7 +19,7 @@ export class PaymentsController {
 
   @MessagePattern('create_charge')
   @UsePipes(new ValidationPipe())  
-  createCharge(@Payload() data: CreateChargeDto){
+  createCharge(@Payload() data: PaymentsCreateChargeDto){
     console.log(' microservice create_charge received data: ', data)
    return this.paymentsService.createCharge(data).catch(err=>{
       console.log('error in creating charge', err.message)
