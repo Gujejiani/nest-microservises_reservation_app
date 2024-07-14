@@ -56,6 +56,7 @@ export class PaymentsService {
     if(email){
       this.notificationsService.emit('notify_email', {
         email: email,
+        text: `You have successfully paid $${amount }! Thank you!`
       })
     }
  
