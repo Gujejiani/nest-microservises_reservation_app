@@ -1,5 +1,6 @@
 import { ExecutionContext, createParamDecorator } from "@nestjs/common";
-import { UserDocument } from "../../../../apps/auth/src/users/models/user.schema";
+import { UserDocument } from "@app/common";
+
 
 
 // local strategy adds user to request object
