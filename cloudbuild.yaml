@@ -1,76 +1,64 @@
-steps: 
+steps:
+  # Reservations
   - name: 'gcr.io/cloud-builders/docker'
     args: [
-     'build',
-     '-t', 
-     'europe-west3-docker.pkg.dev/reservations-429415/reservations/production',
-     '-f',
-     'apps/reservations/Dockerfile',
-     '.'
-    
+      'build',
+      '-t', 
+      'europe-west3-docker.pkg.dev/reservations-429415/reservations/production',
+      '-f',
+      'apps/reservations/Dockerfile',
+      '.'
     ]
   - name: 'gcr.io/cloud-builders/docker'
     args: [
-     'push',
-     'europe-west3-docker.pkg.dev/reservations-429415/reservations/production',
-        
+      'push',
+      'europe-west3-docker.pkg.dev/reservations-429415/reservations/production',
     ]
-    # Payments
 
+  # Payments
   - name: 'gcr.io/cloud-builders/docker'
     args: [
-     'build',
-     '-t', 
-     'europe-west3-docker.pkg.dev/reservations-429415/payments/production',
-     '-f',
-     'apps/payments/Dockerfile',
-     '.'
-    
-    
+      'build',
+      '-t', 
+      'europe-west3-docker.pkg.dev/reservations-429415/payments/production',
+      '-f',
+      'apps/payments/Dockerfile',
+      '.'
     ]
   - name: 'gcr.io/cloud-builders/docker'
     args: [
-     'push',
-     'europe-west3-docker.pkg.dev/reservations-429415/payments/production',
-        
-    ]  
-   
-   # Notifications
+      'push',
+      'europe-west3-docker.pkg.dev/reservations-429415/payments/production',
+    ]
 
+  # Notifications
   - name: 'gcr.io/cloud-builders/docker'
     args: [
-     'build',
-     '-t', 
-     'europe-west3-docker.pkg.dev/reservations-429415/notifications/production',
-     '-f',
-     'apps/notifications/Dockerfile',
-     '.'
-    
-    
+      'build',
+      '-t', 
+      'europe-west3-docker.pkg.dev/reservations-429415/notifications/production',
+      '-f',
+      'apps/notifications/Dockerfile',
+      '.'
     ]
   - name: 'gcr.io/cloud-builders/docker'
     args: [
-     'push',
-     'europe-west3-docker.pkg.dev/reservations-429415/notifications/production',
-        
-    ] 
+      'push',
+      'europe-west3-docker.pkg.dev/reservations-429415/notifications/production',
+    ]
 
-   # Auth
-
+  # Auth
   - name: 'gcr.io/cloud-builders/docker'
     args: [
-     'build',
-     '-t', 
-     'europe-west3-docker.pkg.dev/reservations-429415/auth/production',
-     '-f',
-     'apps/auth/Dockerfile',
-     '.'
-    
-    
+      'build',
+      '-t', 
+      'europe-west3-docker.pkg.dev/reservations-429415/auth/production',
+      '-f',
+      'apps/auth/Dockerfile',
+      '.'
     ]
   - name: 'gcr.io/cloud-builders/docker'
     args: [
-     'push',
-     'europe-west3-docker.pkg.dev/reservations-429415/auth/production',
-        
-    ] 
+      'push',
+      'europe-west3-docker.pkg.dev/reservations-429415/auth/production',
+    ]
