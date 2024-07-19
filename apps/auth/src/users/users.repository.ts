@@ -7,7 +7,7 @@ import { Model } from "mongoose";
 
 @Injectable()
 export class UsersRepository extends AbstractRepository<UserDocument>  {
-    protected readonly logger = new Logger(UsersRepository.name);
+      logger = new Logger(UsersRepository.name) as any;
 
 
 
