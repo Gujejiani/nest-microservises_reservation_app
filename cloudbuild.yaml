@@ -1,5 +1,5 @@
 options:
-  logsBucket: "gs://reservations_bucket2
+   logsBucket: "gs://reservations_bucket2"
 
 
 steps:
