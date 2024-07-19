@@ -8,7 +8,6 @@ steps:
      'apps/reservations/Dockerfile',
      '.'
     
-    
     ]
   - name: 'gcr.io/cloud-builders/docker'
     args: [
