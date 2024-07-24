@@ -40,7 +40,7 @@ $ npm run start
 
 # watch mode
 $ npm run start:dev
-
+# kubectl create deployment notifications --image=europe-west3-docker.pkg.dev/reservations-429415/notifications/production --dry-run=client -o yaml > deployment.yaml
 # production mode
 $ npm run start:prod
 ```
