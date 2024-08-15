@@ -11,8 +11,8 @@ phases:
       - docker build -t auth -f ./apps/auth/Dockerfile .
       - docker tag auth:latest 058264091271.dkr.ecr.eu-north-1.amazonaws.com/auth:latest
 
-      - docker build -t payment -f ./apps/payment/Dockerfile .
-      - docker tag payment:latest 058264091271.dkr.ecr.eu-north-1.amazonaws.com/payment:latest
+      - docker build -t payments -f ./apps/payment/Dockerfile .
+      - docker tag payments:latest 058264091271.dkr.ecr.eu-north-1.amazonaws.com/payments:latest
 
       - docker build -t notifications -f ./apps/notifications/Dockerfile .
       - docker tag notifications:latest 058264091271.dkr.ecr.eu-north-1.amazonaws.com/notifications:latest
@@ -20,5 +20,5 @@ phases:
     commands:
       - docker push 058264091271.dkr.ecr.eu-north-1.amazonaws.com/reservations:latest
       - docker push 058264091271.dkr.ecr.eu-north-1.amazonaws.com/auth:latest
-      - docker push 058264091271.dkr.ecr.eu-north-1.amazonaws.com/payment:latest
+      - docker push 058264091271.dkr.ecr.eu-north-1.amazonaws.com/payments:latest
       - docker push 058264091271.dkr.ecr.eu-north-1.amazonaws.com/notifications:latest
