@@ -2,7 +2,11 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: reservations
+  annotations: 
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    kubernetes.io/ingress.class: alb  
 spec: 
+  ingressClassName: alb
   rules:
   - http:  # This should be an item in the rules array
       paths: 

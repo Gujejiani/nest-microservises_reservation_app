@@ -15,7 +15,7 @@ spec:
         app: notifications
     spec:
       containers:
-        - image: europe-west3-docker.pkg.dev/reservations-429415/notifications/production
+        - image: 058264091271.dkr.ecr.eu-north-1.amazonaws.com/notifications:latest
           name: notifications
           env: 
             - name: PORT
