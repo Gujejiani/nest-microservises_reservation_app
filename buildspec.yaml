@@ -1,3 +1,4 @@
+
 version: 0.2
 phases:
   pre_build:
@@ -22,4 +23,3 @@ phases:
       - docker push 058264091271.dkr.ecr.eu-north-1.amazonaws.com/auth:latest
       - docker push 058264091271.dkr.ecr.eu-north-1.amazonaws.com/payments:latest
       - docker push 058264091271.dkr.ecr.eu-north-1.amazonaws.com/notifications:latest
-      
