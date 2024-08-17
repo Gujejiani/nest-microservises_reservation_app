@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { ReservationsService } from './reservations.service';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
-import { CurrentUser, JwtAuthGuard } from '@app/common';
+import { CurrentUser, JwtAuthGuard, Roles } from '@app/common';
 import { UserDto } from '@app/common';
 
 
@@ -30,8 +30,12 @@ export class ReservationsController {
   async update(@Param('id') id: string, @Body() updateReservationDto: UpdateReservationDto) {
     return await this.reservationsService.update(id, updateReservationDto);
   }
+
+
+
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
+  @Roles('Admin')
   async remove(@Param('id') id: string) {
     return await this.reservationsService.remove(id);
   }
