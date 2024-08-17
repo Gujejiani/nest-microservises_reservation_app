@@ -1,10 +1,10 @@
 import { ExecutionContext, createParamDecorator } from "@nestjs/common";
-import { UserDocument } from "@app/common";
+import { UserEntity } from "@app/common";
 
 
 
 // local strategy adds user to request object
-const getCurrentUserByContext = (context: ExecutionContext): UserDocument => {
+const getCurrentUserByContext = (context: ExecutionContext): UserEntity => {
     const request = context.switchToHttp().getRequest()
     return request.user
 

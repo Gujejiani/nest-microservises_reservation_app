@@ -3,6 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UsersRepository } from './users.repository';
 import * as bcrypt from 'bcryptjs';
 import { GetUserDto } from './dto/get-user.dto';
+import { RoleEntity, UserEntity } from '@app/common';
 @Injectable()
 export class UsersService {
 
@@ -10,18 +11,19 @@ export class UsersService {
 
 
     async create(createUserDto: CreateUserDto){
-            await this.validateCreateUserDto(createUserDto)
-       
-
-        return  this.userRepository.create({
-            ...createUserDto,
-            password: await bcrypt.hash(createUserDto.password, 10)
-        })
+            await this.validateCreateUserEntity(createUserDto)
+        
+            const user = new UserEntity({
+                ...createUserDto,
+                password: await bcrypt.hash(createUserDto.password, 10),
+                roles: createUserDto?.roles?.map(role => new RoleEntity(role)) 
+            })
+        return  this.userRepository.create(user)
     }
 
-    async validateCreateUserDto(createUserDto: CreateUserDto){
+    async validateCreateUserEntity(createUserEntity: CreateUserDto){
         try {
-            await this.userRepository.findOne({email: createUserDto.email})
+            await this.userRepository.findOne({email: createUserEntity.email})
            
         }catch(err){
             return;
@@ -30,7 +32,7 @@ export class UsersService {
     }
 
     async getUser(getUserDto: GetUserDto){
-        return this.userRepository.findOne(getUserDto)
+        return this.userRepository.findOne(getUserDto, {roles: true})
     }
 
 

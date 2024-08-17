@@ -31,7 +31,7 @@ export class JwtAuthGuard implements CanActivate {
                 if(roles?.length){
                     const user = res
                     console.log('USER HAHAHAHAHAs =>>>>>>>>>>>> ', user)
-                    const hasRole = user.roles.some(role => roles.includes(role))
+                    const hasRole = user.roles.map(role=>role.name).some(role => roles.includes(role))
                     if(!hasRole){
                         this.logger.error("user does not have the right role")
                         throw new UnauthorizedException('Unauthorized HAHA')

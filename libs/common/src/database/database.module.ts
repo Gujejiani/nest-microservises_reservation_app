@@ -20,11 +20,11 @@ import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-clas
          useFactory: (configService: ConfigService) => ({
           type: 'mysql',
           host: configService.getOrThrow('MYSQL_HOST'),
-          port: configService.getOrThrow('MYSQL_PORT'),
+          port: parseInt(configService.getOrThrow('MYSQL_PORT'), 10),
           database: configService.getOrThrow('MYSQL_DATABASE'),
           username: configService.getOrThrow('MYSQL_USERNAME'),
           password: configService.getOrThrow('MYSQL_PASSWORD'),
-          synchronize:  configService.getOrThrow('MYSQL_SYNCHRONIZE'),
+          synchronize:  configService.getOrThrow('MYSQL_SYNCHRONIZE') === 'true',
           autoLoadEntities: true,
         }),
         inject: [ConfigService],
