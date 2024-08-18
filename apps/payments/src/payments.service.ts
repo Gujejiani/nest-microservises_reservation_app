@@ -1,19 +1,25 @@
-import { NOTIFICATIONS_SERVICE,  } from '@app/common';
+import {  NOTIFICATIONS_SERVICE_NAME, NotificationsServiceClient,  } from '@app/common';
 import { PaymentsCreateChargeDto } from '@app/common/dto/payments-create-charge.dto';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientGrpc } from '@nestjs/microservices';
 import Stripe from 'stripe';
 
 
 @Injectable()
-export class PaymentsService {
+export class PaymentsService implements OnModuleInit {
+
+  private notificationsService: NotificationsServiceClient
+
   private readonly stripe = new Stripe(this.configService.get('STRIPE_SECRET_KEY'), {
     apiVersion: '2024-04-10',
   
   })
-  constructor(private readonly configService: ConfigService, @Inject(NOTIFICATIONS_SERVICE) private readonly notificationsService: ClientProxy) {
+  constructor(private readonly configService: ConfigService, @Inject(NOTIFICATIONS_SERVICE_NAME) private readonly client: ClientGrpc) {
 
+  }
+  onModuleInit() {
+    this.notificationsService = this.client.getService<NotificationsServiceClient>(NOTIFICATIONS_SERVICE_NAME);
   }
   getHello(): string {
     return 'Hello World!';
@@ -54,10 +60,15 @@ export class PaymentsService {
      // customer:  this.configService.get('TEST_CUSTOMER_ID'),
     })
     if(email){
-      this.notificationsService.emit('notify_email', {
+
+      if(!this.notificationsService){
+        this.notificationsService = this.client.getService<NotificationsServiceClient>(NOTIFICATIONS_SERVICE_NAME);
+      }
+
+      this.notificationsService.notifyEmail ({
         email: email,
         text: `You have successfully paid $${amount }! Thank you!`
-      })
+      }).subscribe()
     }
  
     return paymentIntent

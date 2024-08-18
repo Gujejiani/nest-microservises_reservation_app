@@ -34,4 +34,5 @@ RUN npm install --only=prod
 
 COPY --from=development /usr/src/app/dist ./dist
 
+COPY proto proto
 CMD ["node", "dist/apps/notifications/main.js"]
