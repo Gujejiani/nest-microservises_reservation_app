@@ -12,11 +12,11 @@ async function bootstrap() {
   // instead create microservice, we can use connectMicroservice to retrieve config from ConfigService
 
   app.connectMicroservice({
-      transport: Transport.TCP,
-      options: {
-        host: '0.0.0.0',
-        port: configService.get('PORT'),
-      }
+    transport: Transport.RMQ,
+    options: {
+      urls: [configService.getOrThrow('RABBITMQ_URI')],
+      queue: 'notifications',
+    },
   })
   app.useLogger(app.get(Logger))
   
