@@ -44,5 +44,9 @@ export class UsersService {
         }
         throw new UnauthorizedException('Invalid credentials')
     }
+
+    async findAll(){
+        return this.userRepository.find({})
+    }
     
 }

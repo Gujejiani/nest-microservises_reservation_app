@@ -1,4 +1,5 @@
 import { AbstractDocument } from "@app/common";
+import { Field, ObjectType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
 
@@ -6,15 +7,18 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
     versionKey: false,
 
 })
+@ObjectType()
 export class UserDocument extends AbstractDocument {
     @Prop()
     password: string;
 
     
     @Prop()
+    @Field()
     email: string
 
     @Prop()
+    @Field(()=> [String])
     roles?: string[];
    
 }
