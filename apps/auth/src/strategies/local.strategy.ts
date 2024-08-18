@@ -24,6 +24,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) { // default is lo
             return await this.userService.verifyUser(email, password)
 
         }catch (err){
+            console.log('ERROR comes from here ')
             throw new UnauthorizedException(err)
         }
     }
