@@ -1,73 +1,182 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Project Title: Microservices-Based Application with NestJS
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project is a microservices-based application built using [NestJS](https://nestjs.com/), designed to handle various functionalities such as authentication, reservations, payments, and notifications. The services communicate with each other asynchronously using RabbitMQ, and the data is stored in an SQL database. Each microservice is containerized using Docker, and Docker Compose is used to manage and run the entire application. Additionally, there is a common library used across the services for shared models and authentication logic, including JWT-based authentication with Passport.
 
-## Description
+## Table of Contents
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- [Architecture](#architecture)
+- [Microservices](#microservices)
+  - [Auth Service](#auth-service)
+  - [Reservations Service](#reservations-service)
+  - [Payments Service](#payments-service)
+  - [Notifications Service](#notifications-service)
+- [Common Library](#common-library)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the Application](#running-the-application)
+- [Environment Variables](#environment-variables)
+- [Database](#database)
+- [Communication](#communication)
+- [Authentication](#authentication)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Installation
+## Architecture
 
-```bash
-$ npm install
+The application follows a microservices architecture, where each service is responsible for a specific domain or functionality. The microservices communicate with each other via RabbitMQ, enabling loose coupling and scalability. The following diagram illustrates the architecture:
+
+```
++------------------+        +-------------------+        +-------------------+
+|                  |        |                   |        |                   |
+|  Auth Service    |<------>| Reservations      |<------>| Payments Service  |
+|                  |        | Service           |        |                   |
++------------------+        +-------------------+        +-------------------+
+        ^                            ^                            ^
+        |                            |                            |
+        v                            v                            v
++------------------+        +-------------------+        +-------------------+
+|                  |        |                   |        |                   |
+|  Notifications   |<------>| RabbitMQ Broker   |<------>|  Common Library   |
+|  Service         |        |                   |        |                   |
++------------------+        +-------------------+        +-------------------+
 ```
 
-## Running the app
+## Microservices
+
+### Auth Service
+- **Purpose**: Manages user authentication and authorization.
+- **Features**: 
+  - User registration and login
+  - JWT-based authentication
+  - Token validation and user session management
+- **Technologies**: NestJS, Passport, JWT, SQL
+
+### Reservations Service
+- **Purpose**: Handles reservation-related functionalities.
+- **Features**: 
+  - Create, update, and delete reservations
+  - Fetch reservation details
+  - Integration with Auth Service for user authorization
+- **Technologies**: NestJS, SQL
+
+### Payments Service
+- **Purpose**: Manages payment processing and related transactions.
+- **Features**: 
+  - Process payments
+  - Transaction management
+  - Integration with Reservations and Notifications Services
+- **Technologies**: NestJS, SQL
+
+### Notifications Service
+- **Purpose**: Sends notifications to users based on various events.
+- **Features**: 
+  - Email and SMS notifications
+  - Event-driven notifications based on RabbitMQ messages
+- **Technologies**: NestJS, RabbitMQ
+
+## Common Library
+- **Purpose**: Provides shared functionalities across the microservices.
+- **Features**:
+  - Common models and DTOs
+  - Authentication logic (JWT-based with Passport)
+  - Utility functions and constants
+- **Technologies**: TypeScript, NestJS
+
+## Technologies Used
+
+- **Backend**: NestJS
+- **Message Broker**: RabbitMQ
+- **Database**: SQL (e.g., PostgreSQL, MySQL)
+- **Authentication**: Passport, JWT
+- **Containerization**: Docker, Docker Compose
+- **Language**: TypeScript
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or later)
+- Docker
+- Docker Compose
+- RabbitMQ (or installed as a Docker container)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/your-repo.git
+   cd your-repo
+   ```
+
+2. Install dependencies for each microservice:
+   ```bash
+   cd auth-service
+   npm install
+   cd ../reservations-service
+   npm install
+   cd ../payments-service
+   npm install
+   cd ../notifications-service
+   npm install
+  
+## there is different branches with different communications methods 
+ ``` graphql
+  grpc
+  master
+  rabiqmq
+  typeorm
+ ```
+### Running the Application
+
+1. Build and run the application using Docker Compose:
+   ```bash
+   docker-compose up --build
+   ```
+
+2. The services should be up and running. You can verify by accessing the respective service endpoints (e.g., `http://localhost:3000` for Auth Service).
+
+## Environment Variables
+
+Each microservice requires specific environment variables to be set. Refer to the `.env.example` file in each service directory for the required variables. These typically include:
+
+- `DATABASE_URL`
+- `RABBITMQ_URL`
+- `JWT_SECRET`
+- `PORT`
+
+## Database
+
+The application uses an SQL database to store data. Each microservice has its own database schema. Migrations and seed scripts can be used to manage database changes.
+
+### Running Migrations
+
+To run database migrations, use the following command inside each microservice directory:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-# kubectl create deployment notifications --image=europe-west3-docker.pkg.dev/reservations-429415/notifications/production --dry-run=client -o yaml > deployment.yaml
-# production mode
-$ npm run start:prod
+npm run migration:run
 ```
 
-## Test
+## Communication
 
-```bash
-# unit tests
-$ npm run test
+The microservices communicate with each other using RabbitMQ as a message broker. Each service publishes and subscribes to specific queues/topics based on the event-driven architecture.
 
-# e2e tests
-$ npm run test:e2e
+## Authentication
 
-# test coverage
-$ npm run test:cov
-```
+Authentication is handled by the Auth Service using JWT tokens. The tokens are validated by the other services to ensure that only authenticated users can access the endpoints.
 
-## Support
+### JWT Usage
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **Generate Token**: The Auth Service generates a JWT upon successful login.
+- **Validate Token**: Other services use the common library to validate the token and extract user information.
 
-## Stay in touch
+## Contributing
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Contributions are welcome! Please follow the [contributing guidelines](CONTRIBUTING.md) to submit your changes.
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
